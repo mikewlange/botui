@@ -30,7 +30,7 @@ var comment = '/*\n' +
     ' * Released under the <%= pkg.license %> license.\n' +
     '*/\n\n';
 
-gulp.task('styles', function() {
+gulp.task('styles', () => {
   gulp.src(['./src/styles/normal.scss',
             './src/styles/botui.scss'])
       .pipe(sass().on('error', sass.logError))
@@ -43,17 +43,17 @@ gulp.task('styles', function() {
       .pipe(gulp.dest('./build/'));
 });
 
-gulp.task('themes', function() {
+gulp.task('themes', () => {
   gulp.src('./src/styles/themes/*.scss')
       .pipe(sass().on('error', sass.logError))
       .pipe(minify())
-      .pipe(rename(function (path) {
+      .pipe(rename(path => {
         path.basename = 'botui-theme-' + path.basename;
       }))
       .pipe(gulp.dest('./build/'));
 });
 
-gulp.task('scripts', function () {
+gulp.task('scripts', () => {
       gulp.src('./src/scripts/botui.js') // simply copy the original one
       .pipe(htmlTemplate())
       .pipe(banner(comment, {
@@ -73,10 +73,11 @@ gulp.task('scripts', function () {
       .pipe(gulp.dest('./build/'));
 });
 
-gulp.task('watch',function() {
+gulp.task('watch',() => {
   gulp.watch('./src/styles/*.scss', ['styles']);
   gulp.watch('./src/styles/themes/*.scss', ['themes']);
   gulp.watch(['./src/scripts/botui.js', './src/botui.html'], ['scripts']);
 });
 
 gulp.task('default', ['styles', 'scripts', 'themes']);
+
